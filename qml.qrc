@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>ColumnHeader.qml</file>
+        <file>RowHeader.qml</file>
+        <file>MainTable.qml</file>
+        <file>MainHeader.qml</file>
+    </qresource>
+</RCC>

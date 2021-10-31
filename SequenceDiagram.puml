@@ -1,0 +1,50 @@
+
+@startuml SequenceDiagram
+
+actor User
+participant "Main interface" as interface
+participant "Class ExcelTable" as excelTable
+participant "Class Calculator" as calculator
+participant "Class FileManager" as fileManager
+
+
+group Adding row/column
+    User -> interface: Clicked "Add (row/column)" button
+    interface -> excelTable: Adding row/column request
+    interface <-- excelTable: Showing new row/column request
+    User <- interface: Showing new row/column
+end
+
+group Entering value
+    User -> interface: Enter value in any cell
+    interface -> excelTable: Data saving request
+    alt First character is "="
+        excelTable -> calculator: Calculation request
+        alt Syntax errors
+            excelTable <-- calculator: Error information returned
+        else Everething is fine
+            excelTable <- calculator: Data from link reqested
+            excelTable --> calculator: Data returned 
+            excelTable <-- calculator: Calculation result returned
+        end
+    end
+    interface <-- excelTable: Data showing request
+    User <-- interface: Showing value
+end 
+
+group Saving/opening file
+    User -> interface: Clicked "(Save/Open)" button
+    User <- interface: Path request
+    User --> interface: Path response 
+    interface -> fileManager: (Save/Open) request 
+    alt Save request
+        excelTable <- fileManager: Data request
+        excelTable --> fileManager: Data response
+    else Open request
+        excelTable <- fileManager: Data change request
+    end
+    interface <-- fileManager: Response
+    User <-- interface: Showing response with new table
+end
+
+@enduml

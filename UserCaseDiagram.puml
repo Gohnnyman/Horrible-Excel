@@ -1,0 +1,28 @@
+@startuml UseCaseDiagram
+
+package TableManagment {
+    usecase addCol as "Add column"
+    usecase addRow as "Add row"
+    usecase enterVal as "Enter value in cell"
+    usecase enterFunc as "Enter function value in cell"
+
+    enterFunc --|> enterVal: "<<extends>>"
+}
+
+package FileManagment {
+    usecase saveFile as "Save current table as file"
+    usecase openFile as "Open file with table data"
+}
+
+
+
+ 
+actor User
+
+User --> addCol
+User --> addRow
+User --> enterVal
+User --> openFile
+User --> saveFile
+
+@enduml

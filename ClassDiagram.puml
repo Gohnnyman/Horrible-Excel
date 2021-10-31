@@ -1,0 +1,123 @@
+@startuml ClassDiagram
+
+namespace cppClasses {
+    title Class Diagram 
+    abstract class QObject
+    abstract class QAbstractTableModel
+    class ExcelTable extends QObject, QAbstractTableModel
+    class Calculator extends QObject
+    class Cell
+    class FileManager
+
+    Cell --* ExcelTable
+
+    abstract class QObject {
+        . . .
+    }
+    
+    abstract class QAbstractTableModel {
+        #QVariant data(const QModelIndex&, int) const
+        #QHash<int, QByteArray> roleNames() const
+        #index(int, int, const QModelIndex&) const
+        #int rowCount(const QModelIndex&) const
+        #int columnCount(const QModelIndex&) const
+        -{field} ...
+        #{method} ...
+    }
+
+    class Cell {
+        +bool isSelected
+        +QString text
+    }
+
+    class ExcelTable {
+        -struct Cell
+        -QString currentEditText
+        -int size
+        -QHash <QModelIndex, Cell> cells
+        -QString calculate(const QModelIndex) const
+        +QVariant data(const QModelIndex, int) const 
+        +QHash<int, QByteArray> roleNames() const 
+        +QModelIndex index(int, int, const QModelIndex) const 
+        +int rowCount(const QModelIndex&) const 
+        +int columnCount(const QModelIndex&) const 
+        +QStringList getHeader() const
+        +void saveToCell(int, int, const QString)
+        +QString getCellText(int, int) const
+    }
+    note right: Main C++ class,\nstorages data for TableView.  
+
+    class Calculator {
+        -const ExcelTable* parentTable
+        +QScriptValue mmax()
+        +QScriptValue mmin()
+        +QScriptValue max()
+        +QScriptValue min()
+        +QScriptValue link()
+    }
+
+    class FileManager {
+        -QString defaultPath
+        +void save(QString path)
+        +void open(QString path)
+    }
+}
+
+namespace qmlClasses {
+    class ColumnHeader
+    class TableView
+    class MainTable 
+    class RowHeader
+    class Header
+
+
+    class RowHeader {
+        +int cellWidth
+        +int cellHeight
+        +color cellColor
+        +class model
+        + ...
+    }
+
+    class Header {
+        +int height
+        +alias Text
+        + ...
+    } 
+    note top of Header 
+        Have button for saving/opening files 
+        and textInput that represent text in selected cell
+    end note
+    class ColumnHeader {
+        +int cellWidth
+        +int cellHeight
+        +color cellColor
+        +class model
+        + ...
+    }
+
+    class MainTable {
+        +int cellWidth
+        +int cellHeight
+        + ...
+    }
+    note left: Main qml class
+
+    class TableView {
+        +int cellWidth
+        +int cellHeight
+        +class delegate
+        + ...
+    }
+
+    ' TableView -[hidden]---> RowHeader
+    ' RowHeader -[hidden]> ColumnHeader
+
+    ColumnHeader --* MainTable
+    RowHeader --* MainTable
+    TableView --* MainTable
+    TableView -[bold]- cppClasses.ExcelTable: communication
+    Header -[bold]- cppClasses.FileManager: communication
+}
+
+@enduml
