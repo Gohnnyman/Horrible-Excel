@@ -69,6 +69,9 @@ namespace qmlClasses {
     class MainTable 
     class RowHeader
     class Header
+    class Menu 
+    class Help
+    class Info
 
 
     class RowHeader {
@@ -116,6 +119,9 @@ namespace qmlClasses {
     ColumnHeader --* MainTable
     RowHeader --* MainTable
     TableView --* MainTable
+    Menu --* Header
+    Info --* Header
+    Help --* Header
     TableView -[bold]- cppClasses.ExcelTable: communication
     Header -[bold]- cppClasses.FileManager: communication
 }
