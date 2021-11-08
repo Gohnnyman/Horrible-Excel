@@ -13,8 +13,21 @@ Rectangle {
         anchors.right: parent.right
 
         Button {
+            id: menuButton
+            text: "Меню"
+
+            onClicked: {
+                var component = Qt.createComponent("Menu.qml")
+                var window = component.createObject(root)
+                window.show()
+            }
+        }
+
+        Button {
             id: addRowButton
-            text: "Add row"
+            anchors.left: menuButton.right
+            anchors.leftMargin: 10
+            text: "Додати рядок"
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
@@ -30,39 +43,13 @@ Rectangle {
             id: addColumnButton
             anchors.left: addRowButton.right
             anchors.leftMargin: 10
-            text: "Add column"
+            text: "Додати стовпчик"
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
                     ExcelTable.addColumn()
                     columnHeader.model = ExcelTable.getHeader()
                     table.forceLayout()
-                }
-            }
-        }
-
-        Button {
-            id: saveButton
-            anchors.left: addColumnButton.right
-            anchors.leftMargin: 10
-            text: "Save file"
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    ExcelTable.saveFile();
-                }
-            }
-        }
-
-        Button {
-            id: openButton
-            anchors.left: saveButton.right
-            anchors.leftMargin: 10
-            text: "Open file"
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    ExcelTable.openFile();
                 }
             }
         }

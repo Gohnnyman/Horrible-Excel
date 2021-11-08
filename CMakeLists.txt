@@ -27,6 +27,7 @@ FetchContent_MakeAvailable(googletest)
 set(PROJECT_SOURCES
         main.cpp
         qml.qrc
+        img.qrc
         exceltable.cpp
         calculator.cpp
         filemanager.cpp
@@ -66,7 +67,7 @@ endif()
 
 
 ## UNCOMMENT FOR TESTING
- enable_testing()
+# enable_testing()
 ##
 
 target_compile_definitions(OOP1

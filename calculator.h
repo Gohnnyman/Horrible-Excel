@@ -14,6 +14,7 @@ class Calculator: public QObject, protected QScriptable
     const ExcelTable* parentTable;
 public:
     Calculator(const ExcelTable* table);
+    QScriptEngine* engine;
 public slots:
     QScriptValue mmax();
     QScriptValue mmin();

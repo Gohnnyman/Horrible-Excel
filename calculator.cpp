@@ -66,8 +66,12 @@ QScriptValue Calculator::link()
     QString tmp = parentTable->getCellText(rowStr.toInt(), column);
     bool isOk;
     int ans = tmp.toInt(&isOk);
+
     if(isOk) return ans;
-    else return tmp;
+    else return engine->evaluate(tmp);
 }
 
-Calculator::Calculator(const ExcelTable* table) : parentTable(table){}
+Calculator::Calculator(const ExcelTable* table) : parentTable(table)
+{
+    engine = new QScriptEngine();
+}

@@ -5,5 +5,8 @@
         <file>RowHeader.qml</file>
         <file>MainTable.qml</file>
         <file>MainHeader.qml</file>
+        <file>Menu.qml</file>
+        <file>Info.qml</file>
+        <file>Help.qml</file>
     </qresource>
 </RCC>

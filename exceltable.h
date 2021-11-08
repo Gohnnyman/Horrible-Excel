@@ -22,8 +22,8 @@ private:
 
     QString currentEditText;
 
-    int columns = 200;
-    int rows = 200;
+    int columns = 5;
+    int rows = 5;
 
     QHash <QModelIndex, Cell> cells;
 

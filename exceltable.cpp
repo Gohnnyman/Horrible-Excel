@@ -37,30 +37,33 @@ QString ExcelTable::calculate(QString str) const
 
     str.replace("NOT", "!", Qt::CaseInsensitive);
 
+    str.replace("TRUE", "true", Qt::CaseInsensitive);
+    str.replace("FALSE", "false", Qt::CaseInsensitive);
+
     str.replace(QRegExp("([A-Z]+\\d+)"), "Calculator.link(\"\\1\")");
 
 
-    QScriptEngine engine;
-    QObject *calculator = new Calculator(this);
-    QScriptValue objectValue = engine.newQObject(calculator);
+//    QScriptEngine engine;
+    Calculator *calculator = new Calculator(this);
+    QScriptValue objectValue = calculator->engine->newQObject(calculator);
     QScriptValue result;
 
-    engine.globalObject().setProperty("Calculator", objectValue);
+    calculator->engine->globalObject().setProperty("Calculator", objectValue);
 
-    QScriptSyntaxCheckResult checker = engine.checkSyntax(str);
+    QScriptSyntaxCheckResult checker = calculator->engine->checkSyntax(str);
 
-    result = engine.evaluate(str);
+    result = calculator->engine->evaluate(str);
 
-    if(engine.hasUncaughtException())
+    if(calculator->engine->hasUncaughtException())
     {
         if(checker.state() == QScriptSyntaxCheckResult::Error)
             return QString("%1:%2 %3").arg(checker.errorLineNumber()).arg(checker.errorColumnNumber())
-                    .arg(engine.uncaughtException().toString());
+                    .arg(calculator->engine->uncaughtException().toString());
         else
-            return engine.uncaughtException().toString();
+            return calculator->engine->uncaughtException().toString();
     }
 
-    str = engine.evaluate(str).toBool() == true ? "true" : "false";
+    str = calculator->engine->evaluate(str).toBoolean() == true ? "true" : "false";
     return str;
 }
 
@@ -105,7 +108,7 @@ void ExcelTable::saveToCell(int row, int column, const QString string)
 
 QString ExcelTable::getCellText(int row, int column) const
 {
-    return cells[index(row, column)].text;
+    return calculate(cells[index(row, column)].text);
 }
 
 QModelIndex ExcelTable::index(int row, int column, const QModelIndex &parent) const
@@ -156,7 +159,7 @@ void ExcelTable::openFile()
         emit dataChanged(index(0,0), index(rows, columns));
     }  catch (...) {
         QMessageBox msgBox;
-        msgBox.setText("Cannot open file");
+        msgBox.setText("Помилка відкриття файлу");
         msgBox.exec();
     }
 }

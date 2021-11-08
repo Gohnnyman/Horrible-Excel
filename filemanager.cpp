@@ -11,7 +11,7 @@ FileManager::FileManager(QObject *parent) : QWidget()
 
 void FileManager::save(QStringList data)
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+    QString fileName = QFileDialog::getSaveFileName(this, "Зберегти",
                                                     QDir::currentPath() + "/table.xcl",
                                                     tr("Horrible excel (*.xcl)"));
     if(fileName == "") return;
@@ -34,7 +34,7 @@ QStringList FileManager::open()
     try
     {
         QString fileName = QFileDialog::getOpenFileName(this,
-                                                        tr("Open horrible excel"), QDir::currentPath(), tr("Horrible excel (*.xcl)"));
+                                                        "Відкрити horrible excel", QDir::currentPath(), "Horrible excel (*.xcl)");
         if(fileName == "") return stringList;
 
         QFile file(fileName);
@@ -49,7 +49,7 @@ QStringList FileManager::open()
     catch(std::exception e)
     {
         QMessageBox msgBox;
-        msgBox.setText("Can't open document");
+        msgBox.setText("Помилка відкриття файлу");
         msgBox.exec();
     }
     return stringList;
