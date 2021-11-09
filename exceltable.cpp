@@ -201,6 +201,25 @@ void ExcelTable::addRow()
     rows++;
 }
 
+void ExcelTable::removeColumn()
+{
+    columns--;
+    for(int i = 0; i < rows; ++i)
+    {
+        cells[index(i, columns)].text = "";
+    }
+}
+
+void ExcelTable::removeRow()
+{
+    rows--;
+    for(int i = 0; i < columns; ++i)
+    {
+        cells[index(rows, i)].text = "";
+    }
+}
+
+
 void ExcelTable::selectCell(int row, int column)
 {
     qDebug() << "Selected " << row << ' ' << column;

@@ -54,6 +54,36 @@ Rectangle {
             }
         }
 
+        Button {
+            id: removeRowButton
+            anchors.left: addColumnButton.right
+            anchors.leftMargin: 10
+            text: "Видалити рядок"
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    ExcelTable.removeRow()
+                    columnHeader.model = ExcelTable.getHeader()
+                    table.forceLayout()
+                }
+            }
+        }
+
+
+        Button {
+            id: removeColumnButton
+            anchors.left: removeRowButton.right
+            anchors.leftMargin: 10
+            text: "Видалити стовпчик"
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    ExcelTable.removeColumn()
+                    columnHeader.model = ExcelTable.getHeader()
+                    table.forceLayout()
+                }
+            }
+        }
     }
 
 

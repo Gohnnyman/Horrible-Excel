@@ -10,7 +10,7 @@ Window {
     property int mainHeaderHeight: 100
 
     id: root
-    width: 640
+    width: 840
     height: 480
     visible: true
     title: qsTr("Excel Table")

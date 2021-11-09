@@ -66,6 +66,10 @@ public:
 
     Q_INVOKABLE void addRow();
 
+    Q_INVOKABLE void removeColumn();
+
+    Q_INVOKABLE void removeRow();
+
     Q_INVOKABLE void selectCell(int row, int column);
 
     Q_INVOKABLE QString getLastCellText();
