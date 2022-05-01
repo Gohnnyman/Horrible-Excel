@@ -63,7 +63,7 @@ QString ExcelTable::calculate(QString str) const
             return calculator->engine->uncaughtException().toString();
     }
 
-    str = calculator->engine->evaluate(str).toBoolean() == true ? "true" : "false";
+    str = calculator->engine->evaluate(str).toString();
     return str;
 }
 
